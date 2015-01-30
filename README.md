@@ -44,7 +44,7 @@ Display Ubuntu Setup
 Step 1) Setup & install dependencies:
 
 `$ sudo apt-get update && sudo apt-get dist-upgrade`
-`$ sudo apt-get install xorg nodm chromium-browser
+`$ sudo apt-get install xorg nodm chromium-browser`
 
 Step 2) Create your kiosk user, add it to any relevant groups (www-data?).
 
@@ -52,10 +52,10 @@ Step 3) Log in as your kiosk user.
 
 Step 4) Create ~/.xsession, add the following;
 
-`
+```
 #!/usr/bin/env bash
 chromium-browser
-`
+```
 
 Step 5) Type `startx`… Chromium will start, and most likely occupy only half of the screen.
 
@@ -73,7 +73,7 @@ Step 8) Ctrl+Alt+F1 and then Ctrl+C to return to console and kill our X session.
 
 Step 9) Edit ~/.xsession once again, change the last line so the file reads as follows:
 
-`
+```
 #!/usr/bin/env bash
 export DISPLAY=:0.0 #make the display available
 xrandr -o left #use xrandr to adjust screen orientation. in this case flip it left counter clockwise
@@ -82,7 +82,7 @@ while true; do
 chromium-browser --start-maximized --window-size=1080,1920 --window-position=0,0 --kiosk http://<your_app_url>/;
 sleep 5s;
 done
-`
+```
 
 Step 9a) Save.
 
