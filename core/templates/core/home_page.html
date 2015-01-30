@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+
+{% load static core_tags %}
+
+{% block body_class %}template-{{ self.get_verbose_name|slugify }}{% endblock %}
+
+{% block content %}
+  {% for section in self.sections %}
+    <section>
+      <h2 class="section-heading">{{section.slug}}</h2>
+      {% for slide in section.slides %}
+        {% if slide.image %}
+          {% thumbnail slide.image.file "1024" crop="center" quality=50 as im %}
+            <section class="slide {% if slide.extra_class %}{{slide.extra_class}}{% endif%}" data-transition="cube" data-background="{{im.url}}" id="{{slide.slug}}">
+          {% endthumbnail %}
+        {% else %}
+            <section class="slide {% if slide.extra_class %}{{slide.extra_class}}{% endif%}" data-background="{{slide.bg_color}}" id="{{slide.slug}}">
+        {% endif%}
+              {{slide.body}}
+            </section>
+      {% endfor %}
+    </section>
+  {% endfor %}
+{% endblock %}
